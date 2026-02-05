@@ -1,6 +1,6 @@
 name: CI - Passo 2
 
-on: [push]
+on: []  # push desativado
 
 jobs:
   step2:

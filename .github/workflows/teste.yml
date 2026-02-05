@@ -1,0 +1,10 @@
+name: CI - Passo 1
+
+on: [push]
+
+jobs:
+  step1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4

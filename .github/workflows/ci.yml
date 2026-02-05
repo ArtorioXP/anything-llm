@@ -1,0 +1,45 @@
+name: CI - Quality Gate
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        
+      # Gate 1: Verificação de Secrets
+      
+      - name: Secrets Check
+        run: |
+          echo "Procurando possíveis secrets no repositório..."
+          if grep -R "API_KEY\|SECRET\|PASSWORD" .; then
+            echo "⚠️ Possível secret encontrado"
+            exit 1
+          else
+            echo "✅ Nenhum secret encontrado"
+          fi
+
+      # Gate 2: ESLint 
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar ESLint
+        run: npm install eslint
+
+      - name: Rodar ESLint (modo informativo)
+        run: |
+          echo "Executando ESLint em modo não bloqueante..."
+          npx eslint . || true
+
+      - name: Finalização
+        run: echo "✅ Quality Gate concluído com sucesso"

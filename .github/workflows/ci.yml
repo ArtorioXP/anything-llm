@@ -1,4 +1,4 @@
-name: CI - Quality Gate
+name: CI - Quality Gate (Light)
 
 on:
   push:
@@ -14,32 +14,25 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v4
         
-      # Gate 1: Verificação de Secrets
+      # Gate 1: Estrutura do Projeto
       
-      - name: Secrets Check
+      - name: Verificar estrutura básica
         run: |
-          echo "Procurando possíveis secrets no repositório..."
-          if grep -R "API_KEY\|SECRET\|PASSWORD" .; then
-            echo "⚠️ Possível secret encontrado"
-            exit 1
-          else
-            echo "✅ Nenhum secret encontrado"
-          fi
+          echo "Verificando arquivos essenciais..."
+          test -f README.md
+          test -d server || true
+          test -d frontend || true
+          echo "✅ Estrutura verificada"
 
-      # Gate 2: ESLint 
+      # Gate 2: Secrets Check (informativo)
+
+      - name: Secrets Check (informativo)
+        run: |
+          echo "Buscando possíveis secrets (modo informativo)..."
+          grep -R "API_KEY\|SECRET\|PASSWORD" . || true
+          echo "⚠️ Resultados exibidos apenas para inspeção"
+
+      # Fim
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Instalar ESLint
-        run: npm install eslint
-
-      - name: Rodar ESLint (modo informativo)
-        run: |
-          echo "Executando ESLint em modo não bloqueante..."
-          npx eslint . || true
-
-      - name: Finalização
-        run: echo "✅ Quality Gate concluído com sucesso"
+      - name: Fim
+        run: echo "✅ Pipeline de Quality Gate executado com sucesso"

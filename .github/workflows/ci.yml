@@ -31,6 +31,14 @@ jobs:
           echo "Buscando possíveis secrets (modo informativo)..."
           grep -R "API_KEY\|SECRET\|PASSWORD" . || true
           echo "⚠️ Resultados exibidos apenas para inspeção"
+          
+      # Gate 3: Arquivos obrigatórios
+      - name: Verificação de arquivos obrigatórios
+        run: |
+          echo "Verificando arquivos obrigatórios do projeto..."
+          test -f README.md
+          test -f LICENSE
+          echo "Arquivos obrigatórios verificados"
 
       
       - name: Fim

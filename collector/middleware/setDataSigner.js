@@ -29,12 +29,12 @@ function setDataSigner(request, response, next) {
   const comKey = new CommunicationKey();
   const encryptedPayloadSigner = request.header("X-Payload-Signer");
   if (!encryptedPayloadSigner) console.log('Failed to find signed-payload to set encryption worker! Encryption calls will fail.');
-
+  console.log('Teste de Erro sintatico');
   const decryptedPayloadSignerKey = comKey.decrypt(encryptedPayloadSigner);
   const encryptionWorker = new EncryptionWorker(decryptedPayloadSignerKey);
   response.locals.encryptionWorker = encryptionWorker;
   next();
-  console.log('Set encryption worker on response locals for data signing/encryption.');
+  
 }
 
 module.exports = {

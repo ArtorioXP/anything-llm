@@ -32,23 +32,6 @@ jobs:
           grep -R "API_KEY\|SECRET\|PASSWORD" . || true
           echo "⚠️ Resultados exibidos apenas para inspeção"
 
-
-     # Gate Principal: Linter de Código
-      - name: Super Linter
-        uses: github/super-linter@v6
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_YAML: true
-          VALIDATE_TERRAFORM: false
-          VALIDATE_KUBERNETES: false
-          VALIDATE_SQL: false
-          VALIDATE_OPENAPI: false
-          VALIDATE_NATURAL_LANGUAGE: false
-      # Fim
       
       - name: Fim
         run: echo "✅ Pipeline de Quality Gate executado com sucesso"

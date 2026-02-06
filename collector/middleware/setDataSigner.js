@@ -34,7 +34,7 @@ function setDataSigner(request, response, next) {
   const encryptionWorker = new EncryptionWorker(decryptedPayloadSignerKey);
   response.locals.encryptionWorker = encryptionWorker;
   next();
-  console.log('Set encryption worker on response locals for data signing/encryption.')
+  console.log('Set encryption worker on response locals for data signing/encryption.');
 }
 
 module.exports = {
